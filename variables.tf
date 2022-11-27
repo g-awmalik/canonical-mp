@@ -15,11 +15,90 @@
  */
 
 variable "project_id" {
-  description = "The project ID to deploy to"
+  description = "The ID of the project in which to provision resources."
   type        = string
 }
 
-variable "bucket_name" {
-  description = "The name of the bucket to create"
+variable "name" {
+  description = "The name of the VM instance for the deployment."
   type        = string
+}
+
+variable "zone" {
+  description = "The zone for the solution to be deployed."
+  type        = string
+  default     = "us-west1-a"
+}
+
+variable "source_image" {
+  description = "The image name for the disk for the VM instance."
+  type        = string
+}
+
+variable "source_image_project" {
+  description = "The project name where the solution image is stored."
+  type        = string
+  default     = "click-to-deploy-images"
+}
+
+variable "machine_type" {
+  description = "The machine type to create, e.g. e2-small"
+  type        = string
+  default     = "n2-standard-4"
+}
+
+variable "boot_disk_type" {
+  description = "The boot disk type for the VM instance."
+  type        = string
+  default     = "pd-standard"
+}
+
+variable "boot_disk_size" {
+  description = "The boot disk size for the VM instance in GBs"
+  type        = string
+  default     = "10"
+}
+
+variable "enable_logging" {
+  description = "Enable cloud logging for the VM instance."
+  type        = bool
+}
+
+variable "enable_monitoring" {
+  description = "Enable cloud monitoring for the VM instance."
+  type        = bool
+}
+
+variable "ip_source_ranges" {
+  description = "A map of source IP ranges for accessing the VM instance over HTTP and/or HTTPS with the port no. as the key and the range as the value."
+  type        = map(string)
+  nullable    = true
+}
+
+variable "wp_admin_email" {
+  description = "The administrator email address for Wordpress"
+  type        = string
+}
+
+variable "wp_https_enabled" {
+  description = "Enable access over HTTPS for Wordpress application"
+  type        = bool
+  default     = true
+
+}
+
+variable "wp_install_phpmyadmin" {
+  description = "Install phpMyAdmin on the VM instance"
+  type        = bool
+  default     = true
+
+}
+
+variable "network_interfaces" {
+  description = "The network interfaces to attach the VM instance by specifying the network, subnetwork and external IPs, public access is required"
+  type = list(object({
+    network     = string
+    subnetwork  = string
+    external_ip = string
+  }))
 }

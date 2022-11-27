@@ -27,6 +27,23 @@ module "project" {
   activate_apis = [
     "cloudresourcemanager.googleapis.com",
     "storage-api.googleapis.com",
-    "serviceusage.googleapis.com"
+    "serviceusage.googleapis.com",
+    "compute.googleapis.com",
+    "iam.googleapis.com",
+  ]
+}
+
+module "vpc" {
+  source  = "terraform-google-modules/network/google"
+  version = "~> 5.0"
+
+  project_id   = module.project.project_id
+  network_name = "default"
+  subnets = [
+    {
+      subnet_name   = "default"
+      subnet_ip     = "10.128.0.0/20"
+      subnet_region = "us-west1"
+    },
   ]
 }

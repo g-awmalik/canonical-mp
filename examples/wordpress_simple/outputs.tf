@@ -13,60 +13,61 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 output "instance_self_link" {
   description = "Self-link for the Wordpress compute instance"
-  value       = google_compute_instance.default.self_link
+  value       = module.canonical_mp.instance_self_link
 }
 
 output "instance_zone" {
   description = "Zone for the wordpress compute instance"
-  value       = var.zone
+  value       = module.canonical_mp.instance_zone
 }
 
 output "instance_machine_type" {
   description = "Machine type for the wordpress compute instance"
-  value       = var.machine_type
+  value       = module.canonical_mp.instance_machine_type
 }
 
 output "site_address" {
   description = "Site address for the Worpress"
-  value       = "http://${google_compute_instance.default.network_interface[0].access_config[0].nat_ip}/"
+  value       = module.canonical_mp.site_address
 }
 
 output "admin_url" {
   description = "Administration URL for the Wordpress"
-  value       = "http://${google_compute_instance.default.network_interface[0].access_config[0].nat_ip}/wp-admin"
+  value       = module.canonical_mp.admin_url
 }
 
 output "mysql_user" {
   description = "MySql username for Wordpress"
-  value       = "wordpress"
+  value       = module.canonical_mp.mysql_user
 }
 
 output "mysql_password" {
   description = "Password for the MySql user"
-  value       = random_password.mysql.result
+  value       = module.canonical_mp.mysql_password
   sensitive   = true
 }
 
 output "root_user" {
   description = "Root username for Wordpress"
-  value       = "root"
+  value       = module.canonical_mp.root_user
 }
 
 output "root_password" {
   description = "Password for the root user"
-  value       = random_password.root.result
+  value       = module.canonical_mp.root_password
   sensitive   = true
 }
 
 output "admin_user" {
   description = "Admin username for Wordpress"
-  value       = var.wp_admin_email
+  value       = module.canonical_mp.admin_user
 }
 
 output "admin_password" {
   description = "Password for the admin user"
-  value       = random_password.admin.result
+  value       = module.canonical_mp.admin_password
   sensitive   = true
 }

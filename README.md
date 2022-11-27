@@ -1,10 +1,6 @@
 # terraform-google-canonical-mp
 
-This module was generated from [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template/), which by default generates a module that simply creates a GCS bucket. As the module develops, this README should be updated.
-
-The resources/services/activations/deletions that this module will create/trigger are:
-
-- Create a GCS bucket with the provided name
+This module deloys a [WordPress Google Click to Deploy Solution](https://console.cloud.google.com/marketplace/product/click-to-deploy-images/wordpress) from Marketplace.
 
 ## Usage
 
@@ -15,8 +11,30 @@ module "canonical_mp" {
   source  = "terraform-google-modules/canonical-mp/google"
   version = "~> 0.1"
 
-  project_id  = "<PROJECT ID>"
-  bucket_name = "gcs-test-bucket"
+  project_id           = var.project_id
+  name                 = "wordpress-simple"
+  zone                 = "us-west1-a"
+  source_image         = "wordpress-v20220821"
+  source_image_project = "click-to-deploy-images"
+  machine_type         = "n2-standard-4"
+  boot_disk_type       = "pd-standard"
+  boot_disk_size       = "100"
+  enable_logging       = true
+  enable_monitoring    = true
+  ip_source_ranges = {
+    80 = "0.0.0.0/0"
+    443 = "0.0.0.0/0"
+  }
+  wp_admin_email        = "malik.awais@gmail.com"
+  wp_https_enabled      = true
+  wp_install_phpmyadmin = true
+  network_interfaces = [
+    {
+      network     = "default"
+      subnetwork  = "default"
+      external_ip = "Ephemeral"
+    },
+  ]
 }
 ```
 
@@ -28,14 +46,37 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| bucket\_name | The name of the bucket to create | `string` | n/a | yes |
-| project\_id | The project ID to deploy to | `string` | n/a | yes |
+| boot\_disk\_size | The boot disk size for the VM instance in GBs | `string` | `"10"` | no |
+| boot\_disk\_type | The boot disk type for the VM instance. | `string` | `"pd-standard"` | no |
+| enable\_logging | Enable cloud logging for the VM instance. | `bool` | n/a | yes |
+| enable\_monitoring | Enable cloud monitoring for the VM instance. | `bool` | n/a | yes |
+| ip\_source\_ranges | A map of source IP ranges for accessing the VM instance over HTTP and/or HTTPS with the port no. as the key and the range as the value. | `map(string)` | n/a | yes |
+| machine\_type | The machine type to create, e.g. e2-small | `string` | `"n2-standard-4"` | no |
+| name | The name of the VM instance for the deployment. | `string` | n/a | yes |
+| network\_interfaces | The network interfaces to attach the VM instance by specifying the network, subnetwork and external IPs, public access is required | <pre>list(object({<br>    network     = string<br>    subnetwork  = string<br>    external_ip = string<br>  }))</pre> | n/a | yes |
+| project\_id | The ID of the project in which to provision resources. | `string` | n/a | yes |
+| source\_image | The image name for the disk for the VM instance. | `string` | n/a | yes |
+| source\_image\_project | The project name where the solution image is stored. | `string` | `"click-to-deploy-images"` | no |
+| wp\_admin\_email | The administrator email address for Wordpress | `string` | n/a | yes |
+| wp\_https\_enabled | Enable access over HTTPS for Wordpress application | `bool` | `true` | no |
+| wp\_install\_phpmyadmin | Install phpMyAdmin on the VM instance | `bool` | `true` | no |
+| zone | The zone for the solution to be deployed. | `string` | `"us-west1-a"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| bucket\_name | Name of the bucket |
+| admin\_password | Password for the admin user |
+| admin\_url | Administration URL for the Wordpress |
+| admin\_user | Admin username for Wordpress |
+| instance\_machine\_type | Machine type for the wordpress compute instance |
+| instance\_self\_link | Self-link for the Wordpress compute instance |
+| instance\_zone | Zone for the wordpress compute instance |
+| mysql\_password | Password for the MySql user |
+| mysql\_user | MySql username for Wordpress |
+| root\_password | Password for the root user |
+| root\_user | Root username for Wordpress |
+| site\_address | Site address for the Worpress |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
@@ -55,7 +96,7 @@ The following dependencies must be available:
 A service account with the following roles must be used to provision
 the resources of this module:
 
-- Storage Admin: `roles/storage.admin`
+- Storage Admin: `roles/compute.admin`
 
 The [Project Factory module][project-factory-module] and the
 [IAM module][iam-module] may be used in combination to provision a
@@ -66,7 +107,7 @@ service account with the necessary roles applied.
 A project with the following APIs enabled must be used to host the
 resources of this module:
 
-- Google Cloud Storage JSON API: `storage-api.googleapis.com`
+- Google Compute API: `compute.googleapis.com`
 
 The [Project Factory module][project-factory-module] can be used to
 provision a project with the necessary APIs enabled.
