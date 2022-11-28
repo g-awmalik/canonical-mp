@@ -24,6 +24,13 @@ locals {
     external_ip = o.external_ip,
     }
   }
+
+  vm_metadata = merge({
+    enable-oslogin           = "TRUE"
+    google-logging-enable    = var.enable_logging == true ? "1" : "0"
+    google-monitoring-enable = var.enable_monitoring == true ? "1" : "0"
+    installphpmyadmin        = var.install_phpmyadmin == true ? "True" : "False"
+  }, var.solution_metadata)
 }
 
 resource "google_compute_instance" "default" {
@@ -31,17 +38,7 @@ resource "google_compute_instance" "default" {
   machine_type = var.machine_type
   zone         = var.zone
 
-  metadata = {
-    enable-oslogin           = "TRUE"
-    google-logging-enable    = var.enable_logging == true ? "1" : "0"
-    google-monitoring-enable = var.enable_monitoring == true ? "1" : "0"
-    wordpress-admin-email    = var.wp_admin_email
-    wordpress-enable-https   = var.wp_https_enabled == true ? "True" : "False"
-    installphpmyadmin        = var.wp_install_phpmyadmin == true ? "True" : "False"
-    wordpress-mysql-password = random_password.mysql.result
-    mysql-root-password      = random_password.root.result
-    wordpress-admin-password = random_password.admin.result
-  }
+  metadata = local.vm_metadata
 
   boot_disk {
     initialize_params {
@@ -91,20 +88,4 @@ resource "google_compute_firewall" "http" {
 
   source_ranges = [each.value]
   target_tags   = ["${var.name}-deployment"]
-}
-
-resource "random_password" "mysql" {
-  length  = 8
-  special = false
-}
-
-resource "random_password" "root" {
-  length  = 14
-  special = false
-}
-
-resource "random_password" "admin" {
-  length           = 8
-  special          = true
-  override_special = "-"
 }

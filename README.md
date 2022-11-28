@@ -21,13 +21,13 @@ module "canonical_mp" {
   boot_disk_size       = "100"
   enable_logging       = true
   enable_monitoring    = true
+  install_phpmyadmin   = true
+
   ip_source_ranges = {
-    80 = "0.0.0.0/0"
+    80  = "0.0.0.0/0"
     443 = "0.0.0.0/0"
   }
-  wp_admin_email        = "malik.awais@gmail.com"
-  wp_https_enabled      = true
-  wp_install_phpmyadmin = true
+
   network_interfaces = [
     {
       network     = "default"
@@ -50,33 +50,25 @@ Functional examples are included in the
 | boot\_disk\_type | The boot disk type for the VM instance. | `string` | `"pd-standard"` | no |
 | enable\_logging | Enable cloud logging for the VM instance. | `bool` | n/a | yes |
 | enable\_monitoring | Enable cloud monitoring for the VM instance. | `bool` | n/a | yes |
+| install\_phpmyadmin | Install phpMyAdmin on the VM instance | `bool` | `true` | no |
 | ip\_source\_ranges | A map of source IP ranges for accessing the VM instance over HTTP and/or HTTPS with the port no. as the key and the range as the value. | `map(string)` | n/a | yes |
 | machine\_type | The machine type to create, e.g. e2-small | `string` | `"n2-standard-4"` | no |
 | name | The name of the VM instance for the deployment. | `string` | n/a | yes |
 | network\_interfaces | The network interfaces to attach the VM instance by specifying the network, subnetwork and external IPs, public access is required | <pre>list(object({<br>    network     = string<br>    subnetwork  = string<br>    external_ip = string<br>  }))</pre> | n/a | yes |
 | project\_id | The ID of the project in which to provision resources. | `string` | n/a | yes |
+| solution\_metadata | The solution specific metadata to be applied to the VM instance | `map(string)` | `{}` | no |
 | source\_image | The image name for the disk for the VM instance. | `string` | n/a | yes |
 | source\_image\_project | The project name where the solution image is stored. | `string` | `"click-to-deploy-images"` | no |
-| wp\_admin\_email | The administrator email address for Wordpress | `string` | n/a | yes |
-| wp\_https\_enabled | Enable access over HTTPS for Wordpress application | `bool` | `true` | no |
-| wp\_install\_phpmyadmin | Install phpMyAdmin on the VM instance | `bool` | `true` | no |
 | zone | The zone for the solution to be deployed. | `string` | `"us-west1-a"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| admin\_password | Password for the admin user |
-| admin\_url | Administration URL for the Wordpress |
-| admin\_user | Admin username for Wordpress |
 | instance\_machine\_type | Machine type for the wordpress compute instance |
+| instance\_nat\_ip | Machine type for the wordpress compute instance |
 | instance\_self\_link | Self-link for the Wordpress compute instance |
 | instance\_zone | Zone for the wordpress compute instance |
-| mysql\_password | Password for the MySql user |
-| mysql\_user | MySql username for Wordpress |
-| root\_password | Password for the root user |
-| root\_user | Root username for Wordpress |
-| site\_address | Site address for the Worpress |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

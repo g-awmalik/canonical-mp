@@ -75,19 +75,7 @@ variable "ip_source_ranges" {
   nullable    = true
 }
 
-variable "wp_admin_email" {
-  description = "The administrator email address for Wordpress"
-  type        = string
-}
-
-variable "wp_https_enabled" {
-  description = "Enable access over HTTPS for Wordpress application"
-  type        = bool
-  default     = true
-
-}
-
-variable "wp_install_phpmyadmin" {
+variable "install_phpmyadmin" {
   description = "Install phpMyAdmin on the VM instance"
   type        = bool
   default     = true
@@ -101,4 +89,10 @@ variable "network_interfaces" {
     subnetwork  = string
     external_ip = string
   }))
+}
+
+variable "solution_metadata" {
+  description = "The solution specific metadata to be applied to the VM instance"
+  type        = map(string)
+  default     = {}
 }

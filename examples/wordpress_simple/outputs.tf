@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 output "instance_self_link" {
   description = "Self-link for the Wordpress compute instance"
   value       = module.canonical_mp.instance_self_link
@@ -31,43 +30,43 @@ output "instance_machine_type" {
 
 output "site_address" {
   description = "Site address for the Worpress"
-  value       = module.canonical_mp.site_address
+  value       = "http://${module.canonical_mp.instance_nat_ip}/"
 }
 
 output "admin_url" {
   description = "Administration URL for the Wordpress"
-  value       = module.canonical_mp.admin_url
+  value       = "http://${module.canonical_mp.instance_nat_ip}/wp-admin"
 }
 
 output "mysql_user" {
   description = "MySql username for Wordpress"
-  value       = module.canonical_mp.mysql_user
+  value       = "wordpress"
 }
 
 output "mysql_password" {
   description = "Password for the MySql user"
-  value       = module.canonical_mp.mysql_password
+  value       = random_password.mysql.result
   sensitive   = true
 }
 
 output "root_user" {
   description = "Root username for Wordpress"
-  value       = module.canonical_mp.root_user
+  value       = "root"
 }
 
 output "root_password" {
   description = "Password for the root user"
-  value       = module.canonical_mp.root_password
+  value       = random_password.mysql_root.result
   sensitive   = true
 }
 
 output "admin_user" {
   description = "Admin username for Wordpress"
-  value       = module.canonical_mp.admin_user
+  value       = local.wp_admin_email
 }
 
 output "admin_password" {
   description = "Password for the admin user"
-  value       = module.canonical_mp.admin_password
+  value       = random_password.mysql_admin.result
   sensitive   = true
 }

@@ -28,45 +28,7 @@ output "instance_machine_type" {
   value       = var.machine_type
 }
 
-output "site_address" {
-  description = "Site address for the Worpress"
-  value       = "http://${google_compute_instance.default.network_interface[0].access_config[0].nat_ip}/"
-}
-
-output "admin_url" {
-  description = "Administration URL for the Wordpress"
-  value       = "http://${google_compute_instance.default.network_interface[0].access_config[0].nat_ip}/wp-admin"
-}
-
-output "mysql_user" {
-  description = "MySql username for Wordpress"
-  value       = "wordpress"
-}
-
-output "mysql_password" {
-  description = "Password for the MySql user"
-  value       = random_password.mysql.result
-  sensitive   = true
-}
-
-output "root_user" {
-  description = "Root username for Wordpress"
-  value       = "root"
-}
-
-output "root_password" {
-  description = "Password for the root user"
-  value       = random_password.root.result
-  sensitive   = true
-}
-
-output "admin_user" {
-  description = "Admin username for Wordpress"
-  value       = var.wp_admin_email
-}
-
-output "admin_password" {
-  description = "Password for the admin user"
-  value       = random_password.admin.result
-  sensitive   = true
+output "instance_nat_ip" {
+  description = "Machine type for the wordpress compute instance"
+  value       = google_compute_instance.default.network_interface[0].access_config[0].nat_ip
 }
