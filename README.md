@@ -2,6 +2,32 @@
 
 This module deloys a [WordPress Google Click to Deploy Solution](https://console.cloud.google.com/marketplace/product/click-to-deploy-images/wordpress) from Marketplace.
 
+## Description
+### Tagline
+WordPress Google Click to Deploy Solution
+
+### Detailed
+This module deloys a WordPress Google Click to Deploy Solution from Marketplace.
+
+### PreDeploy
+To deploy this blueprint you must have an active billing account and billing permissions.
+
+## Architecture
+![Wordpress Architecture](assets/wp-architecture.png)
+1. Clients request content by querying the web url.
+2. Requests reach GCP via a public IP and are evaluated by the firewall.
+3. Valid requests pass through the firewall and reach the wordpress GCE instance to serve content.
+
+## Documentation
+- [Hosting a Static Website](https://cloud.google.com/storage/docs/hosting-static-website)
+
+## Deployment Duration
+Configuration: 1 mins
+Deployment: 5 mins
+
+## Cost
+[Wordpress cost details](https://cloud.google.com/products/calculator#id=d2a82f67-ff05-4179-9e15-9682ef77a663)
+
 ## Usage
 
 Basic usage of this module is as follows:

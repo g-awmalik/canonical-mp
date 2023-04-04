@@ -1,0 +1,39 @@
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-canonical-mp-display
+spec:
+  title: terraform-google-canonical-mp
+  source:
+    repo: https://github.com/g-awmalik/terraform-google-canonical-mp
+    sourceType: git
+  input:
+    variables:
+      boot_disk_size:
+        name: boot_disk_size
+      boot_disk_type:
+        name: boot_disk_type
+      enable_logging:
+        name: enable_logging
+      enable_monitoring:
+        name: enable_monitoring
+      install_phpmyadmin:
+        name: install_phpmyadmin
+      ip_source_ranges:
+        name: ip_source_ranges
+      machine_type:
+        name: machine_type
+      name:
+        name: name
+      network_interfaces:
+        name: network_interfaces
+      project_id:
+        name: project_id
+      solution_metadata:
+        name: solution_metadata
+      source_image:
+        name: source_image
+      source_image_project:
+        name: source_image_project
+      zone:
+        name: zone
