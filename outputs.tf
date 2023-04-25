@@ -32,3 +32,13 @@ output "instance_nat_ip" {
   description = "Machine type for the wordpress compute instance"
   value       = google_compute_instance.default.network_interface[0].access_config[0].nat_ip
 }
+
+output "has_external_ip" {
+  description = "Flag to indicate if the wordpress machine has an external IP"
+  value       = google_compute_instance.default.network_interface[0].access_config[0].nat_ip != null ? true : false
+}
+
+output "instance_network" {
+  description = "Machine type for the wordpress compute instance"
+  value       = google_compute_instance.default.network_interface[0]
+}

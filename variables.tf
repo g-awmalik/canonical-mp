@@ -75,11 +75,34 @@ variable "ip_source_ranges" {
   nullable    = true
 }
 
+variable "enable_tcp_80" {
+  description = "Enable network traffic over port 80 for Wordpress"
+  type = bool
+  default = false  
+}
+
+variable "tcp_80_ip_source_ranges" {
+  description = "A comma seperated string of source IP ranges for accessing the VM instance over HTTP port 80."
+  type        = string
+  nullable    = true
+}
+
+variable "enable_tcp_443" {
+  description = "Enable network traffic over port 443 for Wordpress"
+  type = bool
+  default = false  
+}
+
+variable "tcp_443_ip_source_ranges" {
+  description = "A comma seperated string of source IP ranges for accessing the VM instance over HTTPS port 443."
+  type        = string
+  nullable    = true
+}
+
 variable "install_phpmyadmin" {
   description = "Install phpMyAdmin on the VM instance"
   type        = bool
   default     = true
-
 }
 
 variable "network_interfaces" {
@@ -89,6 +112,24 @@ variable "network_interfaces" {
     subnetwork  = string
     external_ip = string
   }))
+}
+
+variable "networks" {
+  description = "The network name to attach the VM instance."
+  type = list(string)
+  default = [ "default" ]
+}
+
+variable "sub_networks" {
+  description = "The sub network name to attach the VM instance."
+  type = list(string)
+  default = [ "default" ]
+}
+
+variable "external_ips" {
+  description = "The external IPs assigned to the VM for public access."
+  type = list(string)
+  default = [ "EPHEMERAL" ]
 }
 
 variable "solution_metadata" {
