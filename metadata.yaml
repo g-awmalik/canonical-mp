@@ -12,15 +12,15 @@ spec:
       sourceType: git
     version: 0.0.1
     actuationTool:
-      type: Terraform
+      flavor: Terraform
       version: '>= 0.13'
     description:
       tagline: WordPress Google Click to Deploy Solution
       detailed: This module deloys a WordPress Google Click to Deploy Solution from Marketplace.
       preDeploy: To deploy this blueprint you must have an active billing account and billing permissions.
     deploymentDuration:
-      configuration: 60
-      deployment: 300
+      configurationSecs: 60
+      deploymentSecs: 300
     costEstimate:
       description: Wordpress cost details
       url: https://cloud.google.com/products/calculator#id=d2a82f67-ff05-4179-9e15-9682ef77a663
@@ -52,7 +52,7 @@ spec:
         version: 5.0.2
   content:
     architecture:
-      diagram: assets/wp-architecture.png
+      diagramUrl: assets/wp-architecture.png
       description:
       - 1. Clients request content by querying the web url.
       - 2. Requests reach GCP via a public IP and are evaluated by the firewall.
@@ -72,52 +72,52 @@ spec:
     variables:
     - name: boot_disk_size
       description: The boot disk size for the VM instance in GBs
-      type: string
-      default: "10"
+      varType: string
+      defaultValue: "10"
     - name: boot_disk_type
       description: The boot disk type for the VM instance.
-      type: string
-      default: pd-standard
+      varType: string
+      defaultValue: pd-standard
     - name: enable_logging
       description: Enable cloud logging for the VM instance.
-      type: bool
+      varType: bool
       required: true
     - name: enable_monitoring
       description: Enable cloud monitoring for the VM instance.
-      type: bool
+      varType: bool
       required: true
     - name: enable_tcp_443
       description: Enable network traffic over port 443 for Wordpress
-      type: bool
-      default: false
+      varType: bool
+      defaultValue: false
     - name: enable_tcp_80
       description: Enable network traffic over port 80 for Wordpress
-      type: bool
-      default: false
+      varType: bool
+      defaultValue: false
     - name: external_ips
       description: The external IPs assigned to the VM for public access.
-      type: list(string)
-      default:
+      varType: list(string)
+      defaultValue:
       - EPHEMERAL
     - name: install_phpmyadmin
       description: Install phpMyAdmin on the VM instance
-      type: bool
-      default: true
+      varType: bool
+      defaultValue: true
     - name: ip_source_ranges
       description: A map of source IP ranges for accessing the VM instance over HTTP and/or HTTPS with the port no. as the key and the range as the value.
-      type: map(string)
+      varType: map(string)
       required: true
     - name: machine_type
       description: The machine type to create, e.g. e2-small
-      type: string
-      default: n2-standard-4
+      varType: string
+      defaultValue: n2-standard-4
     - name: name
       description: The name of the VM instance for the deployment.
-      type: string
+      varType: string
       required: true
     - name: network_interfaces
       description: The network interfaces to attach the VM instance by specifying the network, subnetwork and external IPs, public access is required
-      type: |-
+      varType: |-
         list(object({
             network     = string
             subnetwork  = string
@@ -126,42 +126,42 @@ spec:
       required: true
     - name: networks
       description: The network name to attach the VM instance.
-      type: list(string)
-      default:
+      varType: list(string)
+      defaultValue:
       - default
     - name: project_id
       description: The ID of the project in which to provision resources.
-      type: string
+      varType: string
       required: true
     - name: solution_metadata
       description: The solution specific metadata to be applied to the VM instance
-      type: map(string)
-      default: {}
+      varType: map(string)
+      defaultValue: {}
     - name: source_image
       description: The image name for the disk for the VM instance.
-      type: string
+      varType: string
       required: true
     - name: source_image_project
       description: The project name where the solution image is stored.
-      type: string
-      default: click-to-deploy-images
+      varType: string
+      defaultValue: click-to-deploy-images
     - name: sub_networks
       description: The sub network name to attach the VM instance.
-      type: list(string)
-      default:
+      varType: list(string)
+      defaultValue:
       - default
     - name: tcp_443_ip_source_ranges
       description: A comma seperated string of source IP ranges for accessing the VM instance over HTTPS port 443.
-      type: string
+      varType: string
       required: true
     - name: tcp_80_ip_source_ranges
       description: A comma seperated string of source IP ranges for accessing the VM instance over HTTP port 80.
-      type: string
+      varType: string
       required: true
     - name: zone
       description: The zone for the solution to be deployed.
-      type: string
-      default: us-west1-a
+      varType: string
+      defaultValue: us-west1-a
     outputs:
     - name: has_external_ip
       description: Flag to indicate if the wordpress machine has an external IP

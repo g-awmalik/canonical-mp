@@ -18,7 +18,7 @@ spec:
           min: 20
           max: 10000
           section: boot_disk
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_DISK_SIZE
             gceDiskSize:
               diskTypeVariable: boot_disk_type
@@ -26,7 +26,7 @@ spec:
           name: boot_disk_type
           title: Boot disk type
           section: boot_disk
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_DISK_TYPE
             zoneProperty: zone
         enable_logging:
@@ -43,7 +43,7 @@ spec:
           name: enable_tcp_80
           title: Allow HTTP traffic from the Internet
           section: networking
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_FIREWALL
             gceFirewall:
               networkVariable: networks
@@ -51,7 +51,7 @@ spec:
           name: enable_tcp_443
           title: Allow HTTPS traffic from the Internet
           section: networking
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_FIREWALL
             gceFirewall:
               networkVariable: networks
@@ -62,11 +62,11 @@ spec:
           minItems: 1
           maxItems: 8
           section: networking
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_EXTERNAL_IP
             gceExternalIp:
               networkVariable: networks
-              externalIpType: EPHEMERAL
+              type: EPHEMERAL
         install_phpmyadmin:
           name: install_phpmyadmin
           title: Install phpMyAdmin
@@ -75,7 +75,7 @@ spec:
         machine_type:
           name: machine_type
           title: Machine type
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_MACHINE_TYPE
             zoneProperty: zone
         name:
@@ -89,7 +89,7 @@ spec:
           minItems: 1
           maxItems: 8
           section: networking
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_NETWORK
             gceNetwork:
               allowSharedVpcs: true
@@ -112,7 +112,7 @@ spec:
           minItems: 1
           maxItems: 8
           section: networking
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_SUBNETWORK
             zoneProperty: zone
             gceSubnetwork:
@@ -123,7 +123,7 @@ spec:
           tooltip: Traffic is only allowed from sources within these IP address ranges. Use CIDR notation when entering ranges. <a href="https://cloud.google.com/compute/docs/networking#firewalls">Learn more</a>
           placeholder: 0.0.0.0/0, 192.169.0.2/24
           section: networking
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_FIREWALL_RANGE
             gceFirewallRange:
               firewallVariable: enable_tcp_80
@@ -133,14 +133,14 @@ spec:
           tooltip: Traffic is only allowed from sources within these IP address ranges. Use CIDR notation when entering ranges. <a href="https://cloud.google.com/compute/docs/networking#firewalls">Learn more</a>
           placeholder: 0.0.0.0/0, 192.169.0.2/24
           section: networking
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_FIREWALL_RANGE
             gceFirewallRange:
               firewallVariable: enable_tcp_443
         zone:
           name: zone
           title: Zone
-          x-googleProperty:
+          xGoogleProperty:
             type: GCE_ZONE
       sections:
       - name: boot_disk
