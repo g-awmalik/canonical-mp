@@ -19,7 +19,7 @@ spec:
           max: 10000
           section: boot_disk
           xGoogleProperty:
-            type: GCE_DISK_SIZE
+            type: ET_GCE_DISK_SIZE
             gceDiskSize:
               diskTypeVariable: boot_disk_type
         boot_disk_type:
@@ -27,7 +27,7 @@ spec:
           title: Boot disk type
           section: boot_disk
           xGoogleProperty:
-            type: GCE_DISK_TYPE
+            type: ET_GCE_DISK_TYPE
             zoneProperty: zone
         enable_logging:
           name: enable_logging
@@ -44,7 +44,7 @@ spec:
           title: Allow HTTP traffic from the Internet
           section: networking
           xGoogleProperty:
-            type: GCE_FIREWALL
+            type: ET_GCE_FIREWALL
             gceFirewall:
               networkVariable: networks
         enable_tcp_443:
@@ -52,7 +52,7 @@ spec:
           title: Allow HTTPS traffic from the Internet
           section: networking
           xGoogleProperty:
-            type: GCE_FIREWALL
+            type: ET_GCE_FIREWALL
             gceFirewall:
               networkVariable: networks
         external_ips:
@@ -63,10 +63,10 @@ spec:
           maxItems: 8
           section: networking
           xGoogleProperty:
-            type: GCE_EXTERNAL_IP
+            type: ET_GCE_EXTERNAL_IP
             gceExternalIp:
               networkVariable: networks
-              type: EPHEMERAL
+              type: IP_EPHEMERAL
         install_phpmyadmin:
           name: install_phpmyadmin
           title: Install phpMyAdmin
@@ -76,7 +76,7 @@ spec:
           name: machine_type
           title: Machine type
           xGoogleProperty:
-            type: GCE_MACHINE_TYPE
+            type: ET_GCE_MACHINE_TYPE
             zoneProperty: zone
         name:
           name: name
@@ -90,7 +90,7 @@ spec:
           maxItems: 8
           section: networking
           xGoogleProperty:
-            type: GCE_NETWORK
+            type: ET_GCE_NETWORK
             gceNetwork:
               allowSharedVpcs: true
               machineTypeVariable: machine_type
@@ -113,7 +113,7 @@ spec:
           maxItems: 8
           section: networking
           xGoogleProperty:
-            type: GCE_SUBNETWORK
+            type: ET_GCE_SUBNETWORK
             zoneProperty: zone
             gceSubnetwork:
               networkVariable: networks
@@ -124,7 +124,7 @@ spec:
           placeholder: 0.0.0.0/0, 192.169.0.2/24
           section: networking
           xGoogleProperty:
-            type: GCE_FIREWALL_RANGE
+            type: ET_GCE_FIREWALL_RANGE
             gceFirewallRange:
               firewallVariable: enable_tcp_80
         tcp_443_ip_source_ranges:
@@ -134,14 +134,14 @@ spec:
           placeholder: 0.0.0.0/0, 192.169.0.2/24
           section: networking
           xGoogleProperty:
-            type: GCE_FIREWALL_RANGE
+            type: ET_GCE_FIREWALL_RANGE
             gceFirewallRange:
               firewallVariable: enable_tcp_443
         zone:
           name: zone
           title: Zone
           xGoogleProperty:
-            type: GCE_ZONE
+            type: ET_GCE_ZONE
       sections:
       - name: boot_disk
         title: Boot Disk

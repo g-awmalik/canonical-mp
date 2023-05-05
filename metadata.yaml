@@ -27,7 +27,7 @@ spec:
     author:
       title: click-to-deploy-images
     softwareGroups:
-    - type: OS
+    - type: SG_OS
       software:
       - title: Debian
         version: "11.6"
