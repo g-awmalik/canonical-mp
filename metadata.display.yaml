@@ -72,6 +72,8 @@ spec:
           title: Install phpMyAdmin
         ip_source_ranges:
           name: ip_source_ranges
+          title: Ip Source Ranges
+          invisible: true
         machine_type:
           name: machine_type
           title: Machine type
@@ -83,6 +85,8 @@ spec:
           title: Deployment Name
         network_interfaces:
           name: network_interfaces
+          title: Network Interfaces
+          invisible: true
         networks:
           name: networks
           title: Network name
@@ -96,15 +100,19 @@ spec:
               machineTypeVariable: machine_type
         project_id:
           name: project_id
+          title: Project Id
           invisible: true
         solution_metadata:
           name: solution_metadata
+          title: Solution Metadata
           invisible: true
         source_image:
           name: source_image
+          title: Source Image
           invisible: true
         source_image_project:
           name: source_image_project
+          title: Source Image Project
           invisible: true
         sub_networks:
           name: sub_networks
