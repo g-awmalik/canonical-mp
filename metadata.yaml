@@ -1,3 +1,17 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: BlueprintMetadata
 metadata:
@@ -78,6 +92,10 @@ spec:
       description: The boot disk type for the VM instance.
       varType: string
       defaultValue: pd-standard
+    - name: enable_https
+      description: Enabled HTTPS communication for Wordpress
+      varType: bool
+      defaultValue: false
     - name: enable_logging
       description: Enable cloud logging for the VM instance.
       varType: bool
@@ -86,14 +104,6 @@ spec:
       description: Enable cloud monitoring for the VM instance.
       varType: bool
       required: true
-    - name: enable_tcp_443
-      description: Enable network traffic over port 443 for Wordpress
-      varType: bool
-      defaultValue: false
-    - name: enable_tcp_80
-      description: Enable network traffic over port 80 for Wordpress
-      varType: bool
-      defaultValue: false
     - name: external_ips
       description: The external IPs assigned to the VM for public access.
       varType: list(string)
@@ -103,10 +113,6 @@ spec:
       description: Install phpMyAdmin on the VM instance
       varType: bool
       defaultValue: true
-    - name: ip_source_ranges
-      description: A map of source IP ranges for accessing the VM instance over HTTP and/or HTTPS with the port no. as the key and the range as the value.
-      varType: map(string)
-      required: true
     - name: machine_type
       description: The machine type to create, e.g. e2-small
       varType: string
@@ -114,15 +120,6 @@ spec:
     - name: name
       description: The name of the VM instance for the deployment.
       varType: string
-      required: true
-    - name: network_interfaces
-      description: The network interfaces to attach the VM instance by specifying the network, subnetwork and external IPs, public access is required
-      varType: |-
-        list(object({
-            network     = string
-            subnetwork  = string
-            external_ip = string
-          }))
       required: true
     - name: networks
       description: The network name to attach the VM instance.
@@ -133,10 +130,6 @@ spec:
       description: The ID of the project in which to provision resources.
       varType: string
       required: true
-    - name: solution_metadata
-      description: The solution specific metadata to be applied to the VM instance
-      varType: map(string)
-      defaultValue: {}
     - name: source_image
       description: The image name for the disk for the VM instance.
       varType: string
@@ -158,11 +151,19 @@ spec:
       description: A comma seperated string of source IP ranges for accessing the VM instance over HTTP port 80.
       varType: string
       required: true
+    - name: wp_admin_email
+      description: The email address for Wordpress admin.
+      varType: string
+      required: true
     - name: zone
       description: The zone for the solution to be deployed.
       varType: string
       defaultValue: us-west1-a
     outputs:
+    - name: admin_password
+      description: Password for the admin user
+    - name: admin_user
+      description: Admin username for Wordpress
     - name: has_external_ip
       description: Flag to indicate if the wordpress machine has an external IP
     - name: instance_machine_type
@@ -175,6 +176,10 @@ spec:
       description: Self-link for the Wordpress compute instance
     - name: instance_zone
       description: Zone for the wordpress compute instance
+    - name: mysql_password
+      description: Password for the MySql user
+    - name: root_password
+      description: Password for the root user
   requirements:
     roles:
     - level: Project

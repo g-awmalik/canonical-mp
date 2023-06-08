@@ -42,3 +42,26 @@ output "instance_network" {
   description = "Machine type for the wordpress compute instance"
   value       = google_compute_instance.default.network_interface[0]
 }
+
+output "mysql_password" {
+  description = "Password for the MySql user"
+  value       = random_password.mysql.result
+  sensitive   = true
+}
+
+output "root_password" {
+  description = "Password for the root user"
+  value       = random_password.mysql_root.result
+  sensitive   = true
+}
+
+output "admin_password" {
+  description = "Password for the admin user"
+  value       = random_password.mysql_admin.result
+  sensitive   = true
+}
+
+output "admin_user" {
+  description = "Admin username for Wordpress"
+  value       = var.wp_admin_email
+}

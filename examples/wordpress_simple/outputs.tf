@@ -45,7 +45,7 @@ output "mysql_user" {
 
 output "mysql_password" {
   description = "Password for the MySql user"
-  value       = random_password.mysql.result
+  value       = module.canonical_mp.mysql_password
   sensitive   = true
 }
 
@@ -56,17 +56,17 @@ output "root_user" {
 
 output "root_password" {
   description = "Password for the root user"
-  value       = random_password.mysql_root.result
+  value       = module.canonical_mp.root_password
   sensitive   = true
 }
 
 output "admin_user" {
   description = "Admin username for Wordpress"
-  value       = local.wp_admin_email
+  value       = module.canonical_mp.admin_user
 }
 
 output "admin_password" {
   description = "Password for the admin user"
-  value       = random_password.mysql_admin.result
+  value       = module.canonical_mp.admin_password
   sensitive   = true
 }

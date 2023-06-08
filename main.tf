@@ -18,19 +18,33 @@ provider "google" {
 }
 
 locals {
-  network_interfaces_map = { for o in var.network_interfaces : o.network => {
-    network     = o.network,
-    subnetwork  = o.subnetwork,
-    external_ip = o.external_ip,
+  network_interfaces_map = { for i, n in var.networks : n => {
+    network     = n,
+    subnetwork  = element(var.sub_networks, i)
+    external_ip = element(var.external_ips, i)
     }
   }
 
-  vm_metadata = merge({
-    enable-oslogin           = "TRUE"
-    google-logging-enable    = var.enable_logging == true ? "1" : "0"
-    google-monitoring-enable = var.enable_monitoring == true ? "1" : "0"
-    installphpmyadmin        = var.install_phpmyadmin == true ? "True" : "False"
-  }, var.solution_metadata)
+  ip_source_ranges_map = {
+    "80"  = split(var.tcp_80_ip_source_ranges, ",")
+    "443" = split(var.tcp_443_ip_source_ranges, ",")
+  }
+}
+
+resource "random_password" "mysql" {
+  length  = 8
+  special = false
+}
+
+resource "random_password" "mysql_root" {
+  length  = 14
+  special = false
+}
+
+resource "random_password" "mysql_admin" {
+  length           = 8
+  special          = true
+  override_special = "-"
 }
 
 resource "google_compute_instance" "default" {
@@ -38,7 +52,17 @@ resource "google_compute_instance" "default" {
   machine_type = var.machine_type
   zone         = var.zone
 
-  metadata = local.vm_metadata
+  metadata = {
+    enable-oslogin           = "TRUE"
+    google-logging-enable    = var.enable_logging == true ? "1" : "0"
+    google-monitoring-enable = var.enable_monitoring == true ? "1" : "0"
+    installphpmyadmin        = var.install_phpmyadmin == true ? "True" : "False"
+    wordpress-admin-email    = var.wp_admin_email
+    wordpress-enable-https   = var.enable_https == true ? "True" : "False"
+    wordpress-mysql-password = random_password.mysql.result
+    mysql-root-password      = random_password.mysql_root.result
+    wordpress-admin-password = random_password.mysql_admin.result
+  }
 
   boot_disk {
     initialize_params {
@@ -63,7 +87,7 @@ resource "google_compute_instance" "default" {
     }
   }
 
-  tags = length(var.ip_source_ranges) > 0 ? ["${var.name}-deployment"] : []
+  tags = var.tcp_80_ip_source_ranges || var.tcp_443_ip_source_ranges != "" ? ["${var.name}-deployment"] : []
   service_account {
     scopes = [
       "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
@@ -76,16 +100,16 @@ resource "google_compute_instance" "default" {
 }
 
 resource "google_compute_firewall" "http" {
-  for_each = var.ip_source_ranges
+  for_each = local.ip_source_ranges_map
   project  = var.project_id
   name     = "${var.name}-tcp-${each.key}"
-  network  = var.network_interfaces[0].network
+  network  = element(var.networks, 0)
 
   allow {
     protocol = "tcp"
     ports    = [each.key]
   }
 
-  source_ranges = [each.value]
+  source_ranges = each.value
   target_tags   = ["${var.name}-deployment"]
 }

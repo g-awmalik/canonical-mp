@@ -24,6 +24,11 @@ variable "name" {
   type        = string
 }
 
+variable "wp_admin_email" {
+  description = "The email address for Wordpress admin."
+  type        = string
+}
+
 variable "zone" {
   description = "The zone for the solution to be deployed."
   type        = string
@@ -69,28 +74,10 @@ variable "enable_monitoring" {
   type        = bool
 }
 
-variable "ip_source_ranges" {
-  description = "A map of source IP ranges for accessing the VM instance over HTTP and/or HTTPS with the port no. as the key and the range as the value."
-  type        = map(string)
-  nullable    = true
-}
-
-variable "enable_tcp_80" {
-  description = "Enable network traffic over port 80 for Wordpress"
-  type = bool
-  default = false  
-}
-
 variable "tcp_80_ip_source_ranges" {
   description = "A comma seperated string of source IP ranges for accessing the VM instance over HTTP port 80."
   type        = string
   nullable    = true
-}
-
-variable "enable_tcp_443" {
-  description = "Enable network traffic over port 443 for Wordpress"
-  type = bool
-  default = false  
 }
 
 variable "tcp_443_ip_source_ranges" {
@@ -105,35 +92,26 @@ variable "install_phpmyadmin" {
   default     = true
 }
 
-variable "network_interfaces" {
-  description = "The network interfaces to attach the VM instance by specifying the network, subnetwork and external IPs, public access is required"
-  type = list(object({
-    network     = string
-    subnetwork  = string
-    external_ip = string
-  }))
+variable "enable_https" {
+  description = "Enabled HTTPS communication for Wordpress"
+  type        = bool
+  default     = false
 }
 
 variable "networks" {
   description = "The network name to attach the VM instance."
-  type = list(string)
-  default = [ "default" ]
+  type        = list(string)
+  default     = ["default"]
 }
 
 variable "sub_networks" {
   description = "The sub network name to attach the VM instance."
-  type = list(string)
-  default = [ "default" ]
+  type        = list(string)
+  default     = ["default"]
 }
 
 variable "external_ips" {
   description = "The external IPs assigned to the VM for public access."
-  type = list(string)
-  default = [ "EPHEMERAL" ]
-}
-
-variable "solution_metadata" {
-  description = "The solution specific metadata to be applied to the VM instance"
-  type        = map(string)
-  default     = {}
+  type        = list(string)
+  default     = ["EPHEMERAL"]
 }
