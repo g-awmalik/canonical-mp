@@ -74,10 +74,22 @@ variable "enable_monitoring" {
   type        = bool
 }
 
+variable "enable_tcp_80" {
+  description = "Enable network traffic over port 80 for Wordpress"
+  type        = bool
+  default     = false
+}
+
 variable "tcp_80_ip_source_ranges" {
   description = "A comma seperated string of source IP ranges for accessing the VM instance over HTTP port 80."
   type        = string
   nullable    = true
+}
+
+variable "enable_tcp_443" {
+  description = "Enable network traffic over port 443 for Wordpress"
+  type        = bool
+  default     = false
 }
 
 variable "tcp_443_ip_source_ranges" {

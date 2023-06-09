@@ -25,10 +25,15 @@ locals {
     }
   }
 
-  ip_source_ranges_map = {
-    "80"  = split(var.tcp_80_ip_source_ranges, ",")
+  tcp_80_ip_source_ranges_map = var.enable_tcp_80 ? {
+    "80" = split(var.tcp_80_ip_source_ranges, ",")
+  } : {}
+
+  tcp_443_ip_source_ranges_map = var.enable_tcp_443 ? {
     "443" = split(var.tcp_443_ip_source_ranges, ",")
-  }
+  } : {}
+
+  ip_source_ranges_map = merge(local.tcp_80_ip_source_ranges_map, local.tcp_443_ip_source_ranges_map)
 }
 
 resource "random_password" "mysql" {

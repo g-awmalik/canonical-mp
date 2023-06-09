@@ -104,6 +104,14 @@ spec:
       description: Enable cloud monitoring for the VM instance.
       varType: bool
       required: true
+    - name: enable_tcp_443
+      description: Enable network traffic over port 443 for Wordpress
+      varType: bool
+      defaultValue: false
+    - name: enable_tcp_80
+      description: Enable network traffic over port 80 for Wordpress
+      varType: bool
+      defaultValue: false
     - name: external_ips
       description: The external IPs assigned to the VM for public access.
       varType: list(string)

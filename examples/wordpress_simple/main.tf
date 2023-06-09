@@ -29,7 +29,9 @@ module "canonical_mp" {
   enable_logging           = true
   enable_monitoring        = true
   install_phpmyadmin       = true
+  enable_tcp_80            = true
   tcp_80_ip_source_ranges  = "0.0.0.0/0"
+  enable_tcp_443           = true
   tcp_443_ip_source_ranges = "0.0.0.0/0"
   enable_https             = true
   networks                 = ["default"]

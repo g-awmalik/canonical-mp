@@ -77,6 +77,8 @@ Functional examples are included in the
 | enable\_https | Enabled HTTPS communication for Wordpress | `bool` | `false` | no |
 | enable\_logging | Enable cloud logging for the VM instance. | `bool` | n/a | yes |
 | enable\_monitoring | Enable cloud monitoring for the VM instance. | `bool` | n/a | yes |
+| enable\_tcp\_443 | Enable network traffic over port 443 for Wordpress | `bool` | `false` | no |
+| enable\_tcp\_80 | Enable network traffic over port 80 for Wordpress | `bool` | `false` | no |
 | external\_ips | The external IPs assigned to the VM for public access. | `list(string)` | <pre>[<br>  "EPHEMERAL"<br>]</pre> | no |
 | install\_phpmyadmin | Install phpMyAdmin on the VM instance | `bool` | `true` | no |
 | machine\_type | The machine type to create, e.g. e2-small | `string` | `"n2-standard-4"` | no |

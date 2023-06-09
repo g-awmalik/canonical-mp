@@ -58,6 +58,22 @@ spec:
           title: Enable Stackdriver Monitoring
           tooltip: Stackdriver Monitoring provides visibility into the performance, uptime, and overall health of cloud-powered applications. <a href="https://cloud.google.com/monitoring/">Learn more</a>
           section: stackdriver
+        enable_tcp_80:
+          name: enable_tcp_80
+          title: Allow HTTP traffic from the Internet
+          section: networking
+          xGoogleProperty:
+            type: ET_GCE_FIREWALL
+            gceFirewall:
+              networkVariable: networks
+        enable_tcp_443:
+          name: enable_tcp_443
+          title: Allow HTTPS traffic from the Internet
+          section: networking
+          xGoogleProperty:
+            type: ET_GCE_FIREWALL
+            gceFirewall:
+              networkVariable: networks
         external_ips:
           name: external_ips
           title: External IP
