@@ -38,12 +38,7 @@ variable "zone" {
 variable "source_image" {
   description = "The image name for the disk for the VM instance."
   type        = string
-}
-
-variable "source_image_project" {
-  description = "The project name where the solution image is stored."
-  type        = string
-  default     = "click-to-deploy-images"
+  default     = "projects/click-to-deploy-images/global/images/wordpress-v20220821"
 }
 
 variable "machine_type" {

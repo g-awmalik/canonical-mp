@@ -73,7 +73,7 @@ resource "google_compute_instance" "default" {
     initialize_params {
       size  = var.boot_disk_size
       type  = var.boot_disk_type
-      image = "projects/${var.source_image_project}/global/images/${var.source_image}"
+      image = "${var.source_image}"
     }
   }
 
@@ -92,7 +92,7 @@ resource "google_compute_instance" "default" {
     }
   }
 
-  tags = var.tcp_80_ip_source_ranges || var.tcp_443_ip_source_ranges != "" ? ["${var.name}-deployment"] : []
+  tags = var.tcp_80_ip_source_ranges != "" || var.tcp_443_ip_source_ranges != "" ? ["${var.name}-deployment"] : []
   service_account {
     scopes = [
       "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
