@@ -19,8 +19,9 @@ variable "project_id" {
   type        = string
 }
 
-variable "name" {
-  description = "The name of the VM instance for the deployment."
+// Marketplace requires this variable name to be declared
+variable "goog_cm_deployment_name" {
+  description = "The name of the deployment and VM instance."
   type        = string
 }
 
@@ -38,12 +39,7 @@ variable "zone" {
 variable "source_image" {
   description = "The image name for the disk for the VM instance."
   type        = string
-}
-
-variable "source_image_project" {
-  description = "The project name where the solution image is stored."
-  type        = string
-  default     = "click-to-deploy-images"
+  default     = "projects/click-to-deploy-images/global/images/wordpress-v20220821"
 }
 
 variable "machine_type" {

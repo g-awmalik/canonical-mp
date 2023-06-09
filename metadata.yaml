@@ -141,11 +141,7 @@ spec:
     - name: source_image
       description: The image name for the disk for the VM instance.
       varType: string
-      required: true
-    - name: source_image_project
-      description: The project name where the solution image is stored.
-      varType: string
-      defaultValue: click-to-deploy-images
+      defaultValue: projects/click-to-deploy-images/global/images/wordpress-v20220821
     - name: sub_networks
       description: The sub network name to attach the VM instance.
       varType: list(string)
