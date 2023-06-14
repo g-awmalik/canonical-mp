@@ -117,6 +117,10 @@ spec:
       varType: list(string)
       defaultValue:
       - EPHEMERAL
+    - name: goog_cm_deployment_name
+      description: The name of the deployment and VM instance.
+      varType: string
+      required: true
     - name: install_phpmyadmin
       description: Install phpMyAdmin on the VM instance
       varType: bool
@@ -125,10 +129,6 @@ spec:
       description: The machine type to create, e.g. e2-small
       varType: string
       defaultValue: n2-standard-4
-    - name: name
-      description: The name of the VM instance for the deployment.
-      varType: string
-      required: true
     - name: networks
       description: The network name to attach the VM instance.
       varType: list(string)
