@@ -53,7 +53,7 @@ resource "random_password" "mysql_admin" {
 }
 
 resource "google_compute_instance" "default" {
-  name         = var.name
+  name         = var.goog_cm_deployment_name
   machine_type = var.machine_type
   zone         = var.zone
 
@@ -73,7 +73,7 @@ resource "google_compute_instance" "default" {
     initialize_params {
       size  = var.boot_disk_size
       type  = var.boot_disk_type
-      image = "projects/${var.source_image_project}/global/images/${var.source_image}"
+      image = "${var.source_image}"
     }
   }
 
@@ -92,7 +92,7 @@ resource "google_compute_instance" "default" {
     }
   }
 
-  tags = var.tcp_80_ip_source_ranges || var.tcp_443_ip_source_ranges != "" ? ["${var.name}-deployment"] : []
+  tags = var.tcp_80_ip_source_ranges != "" || var.tcp_443_ip_source_ranges != "" ? ["${var.goog_cm_deployment_name}-deployment"] : []
   service_account {
     scopes = [
       "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
@@ -107,7 +107,7 @@ resource "google_compute_instance" "default" {
 resource "google_compute_firewall" "http" {
   for_each = local.ip_source_ranges_map
   project  = var.project_id
-  name     = "${var.name}-tcp-${each.key}"
+  name     = "${var.goog_cm_deployment_name}-tcp-${each.key}"
   network  = element(var.networks, 0)
 
   allow {
@@ -116,5 +116,5 @@ resource "google_compute_firewall" "http" {
   }
 
   source_ranges = each.value
-  target_tags   = ["${var.name}-deployment"]
+  target_tags   = ["${var.goog_cm_deployment_name}-deployment"]
 }

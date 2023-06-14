@@ -86,6 +86,9 @@ spec:
             gceExternalIp:
               networkVariable: networks
               type: IP_EPHEMERAL
+        goog_cm_deployment_name:
+          name: goog_cm_deployment_name
+          title: Goog Cm Deployment Name
         install_phpmyadmin:
           name: install_phpmyadmin
           title: Install phpMyAdmin
@@ -95,9 +98,6 @@ spec:
           xGoogleProperty:
             type: ET_GCE_MACHINE_TYPE
             zoneProperty: zone
-        name:
-          name: name
-          title: Deployment Name
         networks:
           name: networks
           title: Network name
@@ -116,10 +116,6 @@ spec:
         source_image:
           name: source_image
           title: Source Image
-          invisible: true
-        source_image_project:
-          name: source_image_project
-          title: Source Image Project
           invisible: true
         sub_networks:
           name: sub_networks
