@@ -24,6 +24,9 @@ spec:
     costEstimate:
       description: Wordpress cost details
       url: https://cloud.google.com/products/calculator#id=d2a82f67-ff05-4179-9e15-9682ef77a663
+    cloudProducts:
+    - productId: Compute Engine
+      pageUrl: compute
     author:
       title: click-to-deploy-images
     softwareGroups:
